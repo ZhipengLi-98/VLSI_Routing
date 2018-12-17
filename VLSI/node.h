@@ -32,7 +32,30 @@ public:
 	const point operator+ (const point& p) {
 		return point(this->x + p.x, this->y + p.y);
 	}
+	const bool operator== (const point& p) {
+		if (p.x == this->x && p.y == this->y) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 
 	int x;
 	int y;
+};
+
+class edge {
+public:
+	edge () {
+
+	}
+	edge(point a, point b) {
+		start = a;
+		end = b;
+	}
+
+	point start;
+	point end;
+	bool visit;
 };

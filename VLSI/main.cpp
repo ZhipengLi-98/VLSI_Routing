@@ -7,12 +7,26 @@
 
 class node;
 class point;
+class edge;
 
 int row, col;
 int netNum;
 int nodeNum;
 std::vector<point> nodes;
 std::vector<int> nets;
+std::vector<std::vector<edge>> edges;
+
+bool edgeValid(point a, point b) {
+	for (int i = 0; i < edges.size(); i++) {
+		for (int j = 0; j < edges[i].size(); j++) {
+			if ((edges[i][j].start == a && edges[i][j].end == b) || (edges[i][j].start == b && edges[i][j].end == a)) {
+				return false;
+			}
+		}
+	}
+	// std::cout << "edgeValid: " << a.x << " " << a.y << " " << b.x << " " << b.y << std::endl;
+	return true;
+}
 
 point bfs(std::vector<point> S, std::vector<point> P, std::vector<node> &map) {
 	bool TargetReached = false;
@@ -28,7 +42,7 @@ point bfs(std::vector<point> S, std::vector<point> P, std::vector<node> &map) {
 						(abs(i - p.x) * abs(j - p.y) == 0)) {
 						// std::cout << "bfs: " << i << " " << j << std::endl;
 						// std::cout << map[i * col + j].s << std::endl;
-						if (map[i * col + j].s == Target) {
+						if (map[i * col + j].s == Target && edgeValid(point(i, j), p)) {
 							TargetReached = true;
 							ansx = i;
 							ansy = j;
@@ -42,7 +56,7 @@ point bfs(std::vector<point> S, std::vector<point> P, std::vector<node> &map) {
 								map[i * col + j].flag[0] = true; // ÓÒ
 							break;
 						}
-						else if (!map[i * col + j].visit && map[i * col + j].s != Block) {
+						else if (!map[i * col + j].visit && map[i * col + j].s != Block && edgeValid(point(i, j), p)) {
 							temp.push_back(point(i, j));
 							if ((i - p.x) == -1) 
 								map[i * col + j].flag[3] = true; // ×ó
@@ -128,16 +142,20 @@ int main(int argc, char *argv[]) {
 				map[k].flag[3] = false;
 			}
 
+			std::vector<point> path;
 			point closet = bfs(S, P, map);
 			if (closet.x == -1 && closet.y == -1) {
 				return -1;
 			}
-			std::vector<point> path;
+			int size = path.size();
 			map[closet.x*col + closet.y].s = Source;
 			bool sourceReach = false;
+			std::vector<edge> tempEdge;
 			while (!sourceReach) {
 				S.push_back(closet);
 				// std::cout << closet.x << " " << closet.y << std::endl;
+				point tempPoint = closet;
+				// std::cout << "target: " << closet.x << " " << closet.y << std::endl;
 				if (map[closet.x*col + closet.y].flag[0]) {
 					closet = closet + point(-1, 0);
 				}
@@ -153,13 +171,27 @@ int main(int argc, char *argv[]) {
 				if (map[closet.x*col + closet.y].s == Source) {
 					sourceReach = true;
 				}
+				tempEdge.push_back(edge(tempPoint, closet));
+				// edges.push_back(edge(tempPoint, closet));
 				path.push_back(closet);
 			}
-			// std::cout << std::endl;
+			for (int k = 0; k < tempEdge.size(); k++) {
+				std::cout << "edge: " << tempEdge[k].start.x << " " << tempEdge[k].start.y << " " << tempEdge[k].end.x << " " << tempEdge[k].end.y << std::endl;
+			}
+			edges.push_back(tempEdge);
+			
 			for (int k = 0; k < path.size() - 1; k++) {
+				// std::cout << "path: " << path[k].x << " " << path[k].y << std::endl;
 				P.push_back(path[k]);
 				map[path[k].x * col + path[k].y].s = Source;
+				// edges.push_back(edge(path[k], path[k + 1]));
 			}
+			/*
+			for (int k = 0; k < edges.size(); k++) {
+				std::cout << "edge: " << edges[k].start.x << " " << edges[k].start.y << " " << edges[k].end.x << " " << edges[k].end.y << std::endl;
+			}
+			std::cout << std::endl;
+			*/
 		}
 		for (int j = 0; j < nodes.size(); j++) {
 			map[nodes[j].x*col + nodes[j].y].s = Block;
