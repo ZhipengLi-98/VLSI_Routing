@@ -36,6 +36,7 @@ int nodeNum;
 std::vector<point> nodes;
 std::vector<int> nets;
 std::vector<std::vector<edge>> edges;
+int * regbest;
 
 using namespace std;
 
@@ -316,6 +317,7 @@ int main(int argc, char *argv[]) {
 	init();
 	
 	int * reg;
+	regbest = new int[netNum];
 	reg = new int[netNum];
 
 	for (int i = 0; i < netNum; i++) reg[i] = i;
@@ -333,8 +335,8 @@ int main(int argc, char *argv[]) {
 	int lastminval = minval;
 	int counter = 0;
 
-	double runtime;
-	std::cin >> runtime;
+	double runtime = 100;
+	//std::cin >> runtime;
 	double dur;
 	clock_t start, end;
 	start = clock();
@@ -344,8 +346,8 @@ int main(int argc, char *argv[]) {
 	double alpha = 0.95;
 	int R;
 	int temp_acp = 100;
-	double t = 1.0 * (row + col) * netNum * nodeNum;
-	int defmaxf = (row + col) * netNum * nodeNum;
+	double t = 5.0 * (row + col) * netNum * nodeNum;
+	int defmaxf = (row + col)  * nodeNum;
 
 	while ((dur / CLOCKS_PER_SEC) < runtime) {
 
@@ -383,6 +385,7 @@ int main(int argc, char *argv[]) {
 			*/
 			//cout << "ch1" << endl;
 			edgesbest = edges;
+			for (int i = 0; i < netNum; i++) regbest[i] = reg[i];
 			//system("pause");
 			//return 0;
 		}
@@ -444,6 +447,7 @@ int main(int argc, char *argv[]) {
 				}
 				std::cout << std::endl;
 				*/
+				for (int i = 0; i < netNum; i++) regbest[i] = regj[i];
 				edgesbest = edges;
 				//system("pause");
 				//return 0;
@@ -513,6 +517,8 @@ int main(int argc, char *argv[]) {
 		std::cout << std::endl;
 	}
 
+	for (int i = 0; i < netNum; i++) cout << regbest[i] << " ";
+	std::cout << endl;
 	std::cout << minval << std::endl;
 
 	imshow("line", picture);

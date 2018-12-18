@@ -14,14 +14,17 @@ using namespace std;
 
 int main()
 {
-	int n = 10;
-	int m = 10;
+
+srand((int)time(0));
+
+	int n = 15;
+	int m = 15;
 	int node = 10;
-	int net = 4;
+	int net = 3;
 	int x[1000];
 	int y[1000];
 	int nets[100][100];
-	int s = 2;
+	int s = 4;
 
 	for (int i = 0; i < node; i++)
 	{

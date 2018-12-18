@@ -1,7 +1,7 @@
 ﻿  main.cpp
 d:\virtualbox\vlsi_routing\project\vlsi\vlsi\node.h(5): warning C4091: “typedef ”: 没有声明变量时忽略“state”的左侧
-d:\virtualbox\vlsi_routing\project\vlsi\vlsi\main.cpp(184): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
-d:\virtualbox\vlsi_routing\project\vlsi\vlsi\main.cpp(239): warning C4267: “+=”: 从“size_t”转换到“int”，可能丢失数据
-d:\virtualbox\vlsi_routing\project\vlsi\vlsi\main.cpp(259): warning C4101: “tx”: 未引用的局部变量
-d:\virtualbox\vlsi_routing\project\vlsi\vlsi\main.cpp(259): warning C4101: “ty”: 未引用的局部变量
+d:\virtualbox\vlsi_routing\project\vlsi\vlsi\main.cpp(185): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+d:\virtualbox\vlsi_routing\project\vlsi\vlsi\main.cpp(240): warning C4267: “+=”: 从“size_t”转换到“int”，可能丢失数据
+d:\virtualbox\vlsi_routing\project\vlsi\vlsi\main.cpp(260): warning C4101: “tx”: 未引用的局部变量
+d:\virtualbox\vlsi_routing\project\vlsi\vlsi\main.cpp(260): warning C4101: “ty”: 未引用的局部变量
   VLSI.vcxproj -> D:\Virtualbox\VLSI_Routing\project\VLSI\x64\Debug\VLSI.exe
